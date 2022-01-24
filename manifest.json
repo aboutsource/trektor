@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "Trecktor",
+  "description": "Browser-Extension zum automatischen Anlegen von Toggl tracking tasks",
+  "version": "0.0.1",
+  "icons": {
+    "64": "icons/icon.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "*://trello.com/*"
+      ],
+      "js": [
+        "content_script.js"
+      ]
+    }
+  ],
+
+  "options_ui": {
+    "page": "options/index.html"
+  }
+}
