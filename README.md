@@ -1,2 +1,2 @@
 # trektor
-Browser-Extension zum automatischen Anlegen von toggl tracking tasks
+Browser-Extension zum automatischen Anlegen von Toggl tracking tasks
