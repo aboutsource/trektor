@@ -1,9 +1,21 @@
-function addButton() {
+function addButton(){
     let sidebar = document.querySelector(".window-sidebar")
-    sidebar.innerHTML = "<span class='button-link' id='togglbtn'><span class='icon-sm plugin-icon'>+</span><span>Toggl Task</span></span>" + sidebar.innerHTML
+    let button = document.createElement('span');
+    button.classList.add('button-link');
+    button.addEventListener('click', onClick);
+    sidebar.prepend(button);
+
+    let buttonIcon = document.createElement('span');
+    buttonIcon.classList.add('icon-sm', 'plugin-icon');
+    buttonIcon.innerText = '+';
+    button.append(buttonIcon);
+
+    let buttonText = document.createElement('span');
+    buttonText.innerText = 'Toggl Task';
+    button.append(buttonText);
+    
     sidebar.querySelector(".mod-no-top-margin").classList.remove("mod-no-top-margin")
     sidebar.querySelector(".js-sidebar-add-heading").classList.remove("mod-no-top-margin")
-    document.querySelector("#togglbtn").addEventListener("click", onClick)
 }
 
 var mappings = []

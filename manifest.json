@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Trecktor",
+  "name": "Trektor",
   "description": "Browser-Extension zum automatischen Anlegen von Toggl tracking tasks",
   "version": "0.0.1",
   "icons": {
