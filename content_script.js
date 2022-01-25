@@ -14,7 +14,7 @@ function addButton(){
     buttonText.innerText = 'Toggl Task';
     button.append(buttonText);
     
-    sidebar.querySelectorAll(".mod-no-top-margin")[1].classList.remove("mod-no-top-margin")
+    sidebar.querySelector(".js-sidebar-add-heading").classList.remove("mod-no-top-margin")
 }
 
 function onClick(){
