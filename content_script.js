@@ -28,7 +28,7 @@ mappings["Camper"] = "camper"
 function onClick() {
     let apiKey = "afadffe77f745496f80ebb4bf460c615"
     //generate token at https://trello.com/1/authorize?expiration=never&scope=read,write,account&response_type=token&name=Server%20Token&key=afadffe77f745496f80ebb4bf460c615
-    let token = "af00d9597af9fb897f6b2fedb3b7152845991fe186caca08cf5dbb03bba40ffc"
+    let token = "***"
     console.log("Hallo")
     let longId = window.location.href.split("/")[4]
     var url = 'https://api.trello.com/1/cards/' + longId + '?key=' + apiKey + '&token=' + token
@@ -47,7 +47,7 @@ function onClick() {
                         return '%' + c.charCodeAt(0).toString(16);
                     });
                 }
-                var url = 'https://api.trello.com/1/cards/' + longId + '?name=' + fixedEncodeURIComponent(response["name"]) + fixedEncodeURIComponent("#") + labelShort + "_" + shortId + '&key=' + apiKey + '&token=' + token
+                var url = 'https://api.trello.com/1/cards/' + longId + '?name=' + fixedEncodeURIComponent(response["name"]) + fixedEncodeURIComponent(" #") + labelShort + "_" + shortId + '&key=' + apiKey + '&token=' + token
                 console.log(url)
                 fetch(url, {
                     method: 'PUT'
