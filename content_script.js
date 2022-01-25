@@ -1,8 +1,8 @@
 function addButton(){
-    const sidebar = document.getElementsByClassName("window-sidebar")[0]
+    const sidebar = document.querySelector(".window-sidebar")
     sidebar.innerHTML = "<span class='button-link' id='togglbtn'><span class='icon-sm plugin-icon'>+</span><span>Toggl Task</span></span>" + sidebar.innerHTML
-    sidebar.getElementsByClassName("mod-no-top-margin")[1].classList.remove("mod-no-top-margin")
-    document.getElementById("togglbtn").addEventListener("click", onClick)
+    sidebar.querySelectorAll(".mod-no-top-margin")[1].classList.remove("mod-no-top-margin")
+    document.querySelector("#togglbtn").addEventListener("click", onClick)
 }
 
 function onClick(){
@@ -12,6 +12,5 @@ function onClick(){
 window.addEventListener("pushstate", function(){
     if(window.location.pathname.startsWith("/c/")){
         addButton()
-        console.log("JUHUUU")
     }
 })
