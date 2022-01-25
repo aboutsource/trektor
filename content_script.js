@@ -1,6 +1,19 @@
 function addButton(){
     const sidebar = document.querySelector(".window-sidebar")
-    sidebar.innerHTML = "<span class='button-link' id='togglbtn'><span class='icon-sm plugin-icon'>+</span><span>Toggl Task</span></span>" + sidebar.innerHTML
+    const button = document.createElement('span');
+    button.classList.add('button-link');
+    button.addEventListener('click', onClick);
+    sidebar.prepend(button);
+
+    const buttonIcon = document.createElement('span');
+    buttonIcon.classList.add('icon-sm', 'plugin-icon');
+    buttonIcon.innerText = '+';
+    button.append(buttonIcon);
+
+    const buttonText = document.createElement('span');
+    buttonText.innerText = 'Toggl Task';
+    button.append(buttonText);
+    
     sidebar.querySelectorAll(".mod-no-top-margin")[1].classList.remove("mod-no-top-margin")
     document.querySelector("#togglbtn").addEventListener("click", onClick)
 }
