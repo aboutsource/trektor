@@ -15,7 +15,6 @@ function addButton(){
     button.append(buttonText);
     
     sidebar.querySelectorAll(".mod-no-top-margin")[1].classList.remove("mod-no-top-margin")
-    document.querySelector("#togglbtn").addEventListener("click", onClick)
 }
 
 function onClick(){
