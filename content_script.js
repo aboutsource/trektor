@@ -18,12 +18,13 @@ function addButton(){
     sidebar.querySelector(".js-sidebar-add-heading").classList.remove("mod-no-top-margin")
 }
 
-var mappings = []
-mappings["GG"] = "gg"
-mappings["Audience Builder"] = "ab"
-mappings["Audience Explorer"] = "ae"
-mappings["Cta Calls"] = "xcta"
-mappings["Camper"] = "camper"
+const mappings = {
+  "GG": "gg",
+  "Audience Builder": "ab",
+  "Audience Explorer": "ae",
+  "Cta Calls": "xcta",
+  "Camper": "camper",
+};
 
 function onClick() {
     let apiKey = "afadffe77f745496f80ebb4bf460c615"
