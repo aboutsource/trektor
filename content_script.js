@@ -1,4 +1,4 @@
-function addButton(){
+function addButton() {
     const sidebar = document.querySelector(".window-sidebar")
     const button = document.createElement('span');
     button.classList.add('button-link');
@@ -13,17 +13,17 @@ function addButton(){
     const buttonText = document.createElement('span');
     buttonText.innerText = 'Toggl Task';
     button.append(buttonText);
-    
+
     sidebar.querySelector(".mod-no-top-margin").classList.remove("mod-no-top-margin")
     sidebar.querySelector(".js-sidebar-add-heading").classList.remove("mod-no-top-margin")
 }
 
 const mappings = {
-  "GG": "gg",
-  "Audience Builder": "ab",
-  "Audience Explorer": "ae",
-  "Cta Calls": "xcta",
-  "Camper": "camper",
+    "GG": "gg",
+    "Audience Builder": "ab",
+    "Audience Explorer": "ae",
+    "Cta Calls": "xcta",
+    "Camper": "camper",
 };
 
 function onClick() {
@@ -32,29 +32,38 @@ function onClick() {
     let token = "***"
     console.log("Hallo")
     const longId = window.location.pathname.split("/")[2];
-    var url = 'https://api.trello.com/1/cards/' + longId + '?key=' + apiKey + '&token=' + token
+    var url = `https://api.trello.com/1/cards/${longId}?key=${apiKey}&token=${token}`
     fetch(url).then(response => response.json()).then(response => {
         shortId = response["idShort"]
 
         if (!response["name"].endsWith(shortId)) {
             for (var i in response["labels"]) {
-                var labelShort = mappings[response["labels"][i]["name"]]
-                console.log(labelShort)
+                if (labelShort == undefined) {
+                    var labelShort = mappings[response["labels"][i]["name"]]
+                } else if (mappings[response["labels"][i]["name"]] != undefined) {
+                    alert(`Diese Karte hat sowohl "${labelShort}" als auch "${mappings[response["labels"][i]["name"]]}".`)
+                }
             }
 
             if (labelShort != undefined) {
-                const fixedEncodeURIComponent = (str) => {
-                    return encodeURIComponent(str).replace(/[!'()*]/g, (c) => {
-                        return '%' + c.charCodeAt(0).toString(16);
-                    });
-                }
-                var url = 'https://api.trello.com/1/cards/' + longId + '?name=' + fixedEncodeURIComponent(response["name"]) + fixedEncodeURIComponent(" #") + labelShort + "_" + shortId + '&key=' + apiKey + '&token=' + token
+
+
+                const url = new URL(`https://api.trello.com/1/cards/${longId}`)
                 console.log(url)
-                fetch(url, {
-                    method: 'PUT'
-                }).then(response => {//response.json()).then(response => {
+
+                const data = {
+                    "name": `${response["name"]} #${labelShort}_${shortId}`
+                };
+                const jsonBody = JSON.stringify(data);
+                fetch(url.toString(), {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `OAuth oauth_consumer_key="${apiKey}", oauth_token="${token}"`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonBody
+                }).then(response => {
                     console.log(response)
-                    console.log("HURRA!")
                 })
             }
         }
