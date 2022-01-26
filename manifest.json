@@ -18,6 +18,10 @@
     }
   ],
 
+  "permissions": [
+    "*://api.trello.com/*"
+  ],
+
   "options_ui": {
     "page": "options/index.html"
   }
