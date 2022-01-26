@@ -31,7 +31,7 @@ function onClick() {
     //generate token at https://trello.com/1/authorize?expiration=never&scope=read,write,account&response_type=token&name=Server%20Token&key=afadffe77f745496f80ebb4bf460c615
     let token = "***"
     console.log("Hallo")
-    let longId = window.location.href.split("/")[4]
+    const longId = window.location.pathname.split("/")[2];
     var url = 'https://api.trello.com/1/cards/' + longId + '?key=' + apiKey + '&token=' + token
     fetch(url).then(response => response.json()).then(response => {
         shortId = response["idShort"]
