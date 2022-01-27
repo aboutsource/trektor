@@ -1,5 +1,3 @@
-console.log("Hallo")
-
 function addButton() {
     const sidebar = document.querySelector(".window-sidebar")
     const button = document.createElement('span');
@@ -124,8 +122,6 @@ function onClick() {
                                     'Content-Type': 'application/json'
                                 },
                                 body: JSON.stringify(data)
-                            }).then(response => {
-                                console.log(response)
                             })
                         }
                     }
