@@ -20,7 +20,8 @@
 
   "permissions": [
     "*://api.trello.com/*",
-    "*://*.toggl.com/*"
+    "*://*.toggl.com/*",
+    "storage"
   ],
 
   "options_ui": {
