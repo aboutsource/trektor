@@ -1,3 +1,5 @@
+console.log("Hallo")
+
 function addButton() {
     const sidebar = document.querySelector(".window-sidebar")
     const button = document.createElement('span');
@@ -105,7 +107,7 @@ function onClick() {
                     }
                 }).then(response => response.json()).then(response => {
                     for (var i in response) {
-                        if (response[i]["name"].endsWith(`(${labelShort})`) || (labelShort == "gg" && response[i]["name"] == "Globalgold")) {
+                        if (response[i]["name"].endsWith(`(${labelShort})`)) {
                             var pid = response[i]["id"]
 
                             url = new URL('https://api.track.toggl.com/api/v8/tasks')
