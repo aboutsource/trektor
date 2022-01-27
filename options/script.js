@@ -1,10 +1,8 @@
 const trelloTextField = document.querySelector("#trello_token")
 const togglTextField = document.querySelector("#toggl_token")
 
-trelloTextField.addEventListener("change", onChange)
-trelloTextField.addEventListener("paste", onChange)
-togglTextField.addEventListener("change", onChange)
-togglTextField.addEventListener("paste", onChange)
+trelloTextField.addEventListener("input", onChange)
+togglTextField.addEventListener("input", onChange)
 
 function onChange() {
     browser.storage.local.set({
