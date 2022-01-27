@@ -4,7 +4,7 @@
   "description": "Browser-Extension zum automatischen Anlegen von Toggl tracking tasks",
   "version": "0.0.1",
   "icons": {
-    "64": "icons/icon.png"
+    "64": "icons/64.png"
   },
 
   "content_scripts": [
