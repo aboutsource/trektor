@@ -1,3 +1,11 @@
+let engine;
+
+if (window.browser !== undefined) {
+    engine = browser;
+} else {
+    engine = chrome;
+}
+
 function addButton() {
     const sidebar = document.querySelector(".window-sidebar")
     const button = document.createElement('span');
@@ -29,7 +37,7 @@ const mappings = {
 
 function onClick() {
     let trelloApiKey = "afadffe77f745496f80ebb4bf460c615"
-    browser.storage.local.get().then(result => {
+    engine.storage.local.get().then(result => {
         const trelloToken = result.trello
         const togglToken = result.toggl
 
@@ -136,9 +144,11 @@ function onClick() {
         })
     })
 
-    window.addEventListener("pushstate", function () {
-        if (window.location.pathname.startsWith("/c/")) {
-            addButton()
-        }
-    })
+
 }
+
+window.addEventListener("pushstate", function () {
+    if (window.location.pathname.startsWith("/c/")) {
+        addButton()
+    }
+})
