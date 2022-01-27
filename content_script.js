@@ -34,8 +34,13 @@ function onClick() {
         const togglToken = result.toggl
 
         const idLong = window.location.pathname.split("/")[2];
-        var url = new URL(`https://api.trello.com/1/cards/${idLong}?key=${trelloApiKey}&token=${trelloToken}`)
-        fetch(url.toString()).then(response => response.json()).then(response => {
+        var url = new URL(`https://api.trello.com/1/cards/${idLong}`)
+        fetch(url.toString(), {
+            headers: {
+                'Authorization': `OAuth oauth_consumer_key="${trelloApiKey}", oauth_token="${trelloToken}"`,
+                'Content-Type': 'application/json'
+            },
+        }).then(response => response.json()).then(response => {
             const idShort = response["idShort"]
 
             var labelShort, labelLong = undefined
