@@ -19,7 +19,6 @@ function addButton() {
 }
 
 const mappings = {
-    "Globalgold": "gg",
     "GG": "gg",
     "Audience Builder": "ab",
     "Audience Exporter": "ae",
@@ -33,9 +32,6 @@ function onClick() {
     browser.storage.local.get().then(result => {
         const trelloToken = result.trello
         const togglToken = result.toggl
-
-        trelloToken = "af00d9597af9fb897f6b2fedb3b7152845991fe186caca08cf5dbb03bba40ffc"
-        togglToken = "1ccd218cb782e37aa2a50ed6b546272e"
 
         const idLong = window.location.pathname.split("/")[2];
         var url = new URL(`https://api.trello.com/1/cards/${idLong}?key=${trelloApiKey}&token=${trelloToken}`)
@@ -109,7 +105,7 @@ function onClick() {
                     }
                 }).then(response => response.json()).then(response => {
                     for (var i in response) {
-                        if (response[i]["name"].endsWith(`(${labelShort})`)) {
+                        if (response[i]["name"].endsWith(`(${labelShort})`) || (labelShort == "gg" && response[i]["name"] == "Globalgold")) {
                             var pid = response[i]["id"]
 
                             url = new URL('https://api.track.toggl.com/api/v8/tasks')
