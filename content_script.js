@@ -49,7 +49,7 @@ function onClick() {
             }
 
             if (labelShort == undefined) {
-                alert("Diese Karte besitzt kein in den mappings vorhandenes Label.")
+                alert("Diese Karte besitzt kein unterstütztes Projekt Label.")
                 return false
             }
 
