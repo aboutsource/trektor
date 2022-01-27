@@ -19,7 +19,8 @@
   ],
 
   "permissions": [
-    "*://api.trello.com/*"
+    "*://api.trello.com/*",
+    "*://*.toggl.com/*"
   ],
 
   "options_ui": {
