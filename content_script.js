@@ -1,11 +1,3 @@
-let engine;
-
-if (window.browser !== undefined) {
-    engine = browser;
-} else {
-    engine = chrome;
-}
-
 function addButton() {
     const sidebar = document.querySelector(".window-sidebar")
     const button = document.createElement('span');
@@ -37,7 +29,7 @@ const mappings = {
 
 function onClick() {
     let trelloApiKey = "afadffe77f745496f80ebb4bf460c615"
-    engine.storage.local.get().then(result => {
+    trektorStorage.get(['trello', 'toggl']).then(result => {
         const trelloToken = result.trello
         const togglToken = result.toggl
 
@@ -94,12 +86,12 @@ function onClick() {
 
             url = new URL("https://api.track.toggl.com/api/v8/workspaces")
             const togglAuth = btoa(`${togglToken}:api_token`)
-            fetch(url.toString(), {
+            trektorRuntime.sendMessage([url.toString(), {
                 headers: {
                     'Authorization': `Basic ${togglAuth}`,
                     'Content-Type': 'application/json'
                 }
-            }).then(response => response.json()).then(response => {
+            }]).then(response => {
                 for (var i in response) {
                     if (response[i]["name"] == "aboutsource") {
                         var wid = response[i]["id"]
@@ -111,12 +103,12 @@ function onClick() {
                 }
 
                 url = new URL(`https://api.track.toggl.com/api/v8/workspaces/${wid}/projects`)
-                fetch(url.toString(), {
+                trektorRuntime.sendMessage([url.toString(), {
                     headers: {
                         'Authorization': `Basic ${togglAuth}`,
                         'Content-Type': 'application/json'
                     }
-                }).then(response => response.json()).then(response => {
+                }]).then(response => {
                     for (var i in response) {
                         if (response[i]["name"].endsWith(`(${labelShort})`)) {
                             var pid = response[i]["id"]
@@ -128,14 +120,14 @@ function onClick() {
                                     "pid": pid
                                 }
                             }
-                            fetch(url.toString(), {
+                            trektorRuntime.sendMessage([url.toString(), {
                                 method: 'POST',
                                 headers: {
                                     'Authorization': `Basic ${togglAuth}`,
                                     'Content-Type': 'application/json'
                                 },
                                 body: JSON.stringify(data)
-                            })
+                            }])
                         }
                     }
                 })
