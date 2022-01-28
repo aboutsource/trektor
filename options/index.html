@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="icon" href="icons/64.png">
+    <title>Trektor settings</title>
     <meta charset="UTF-8">
     <link href="style.css" rel="stylesheet" />
   </head>
-  <body>
-    <h1>Extension settings</h1>
+  <body class="browser-style">
+    <h2>Trektor settings</h2>
+
+    <a href="https://trello.com/1/authorize?expiration=never&scope=read,write,account&response_type=token&name=Trektor&key=afadffe77f745496f80ebb4bf460c615">
+      Trello Token generieren</a><br>
+    <input type="text" id='trello_token' class="browser-style" aria-label="Trello Token"/><br><a href="https://track.toggl.com/profile">Toggl Token (ziemlich weit runter scrollen)</a> <br>
+    <input type="text" id="toggl_token"/><br><br><br>
     <script src="script.js"></script>
   </body>
 </html>
