@@ -13,11 +13,17 @@
         "*://trello.com/*"
       ],
       "js": [
+        "trektor.js",
         "content_script.js"
       ]
     }
   ],
-
+  "background": {
+    "scripts": [
+      "trektor.js",
+      "background.js"
+    ]
+  },
   "permissions": [
     "*://api.trello.com/*",
     "*://*.toggl.com/*",
