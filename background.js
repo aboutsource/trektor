@@ -1,1 +1,12 @@
-trektorRuntime.onMessage((args) => fetch(...args).then((response) => response.json()));
+trektor.runtime.onMessage((msg) => {
+  switch (msg.action) {
+    case 'fetchJSON':
+      return fetchJSON(...msg.args);
+    default:
+      return Promise.reject('unknown action');
+  }
+});
+
+function fetchJSON(url, options = {}) {
+  return fetch(url, options).then((response) => response.json());
+}

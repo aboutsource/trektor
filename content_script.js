@@ -29,7 +29,7 @@ const mappings = {
 
 function onClick() {
     let trelloApiKey = "afadffe77f745496f80ebb4bf460c615"
-    trektorStorage.get(['trello', 'toggl']).then(result => {
+    trektor.storage.get(['trello', 'toggl']).then(result => {
         const trelloToken = result.trello
         const togglToken = result.toggl
 
@@ -86,12 +86,12 @@ function onClick() {
 
             url = new URL("https://api.track.toggl.com/api/v8/workspaces")
             const togglAuth = btoa(`${togglToken}:api_token`)
-            trektorRuntime.sendMessage([url.toString(), {
+            trektor.fetchJSON(url.toString(), {
                 headers: {
                     'Authorization': `Basic ${togglAuth}`,
                     'Content-Type': 'application/json'
                 }
-            }]).then(response => {
+            }).then(response => {
                 for (var i in response) {
                     if (response[i]["name"] == "aboutsource") {
                         var wid = response[i]["id"]
@@ -103,12 +103,12 @@ function onClick() {
                 }
 
                 url = new URL(`https://api.track.toggl.com/api/v8/workspaces/${wid}/projects`)
-                trektorRuntime.sendMessage([url.toString(), {
+                trektor.fetchJSON(url.toString(), {
                     headers: {
                         'Authorization': `Basic ${togglAuth}`,
                         'Content-Type': 'application/json'
                     }
-                }]).then(response => {
+                }).then(response => {
                     for (var i in response) {
                         if (response[i]["name"].endsWith(`(${labelShort})`)) {
                             var pid = response[i]["id"]
@@ -120,14 +120,14 @@ function onClick() {
                                     "pid": pid
                                 }
                             }
-                            trektorRuntime.sendMessage([url.toString(), {
+                            trektor.fetchJSON(url.toString(), {
                                 method: 'POST',
                                 headers: {
                                     'Authorization': `Basic ${togglAuth}`,
                                     'Content-Type': 'application/json'
                                 },
                                 body: JSON.stringify(data)
-                            }])
+                            })
                         }
                     }
                 })

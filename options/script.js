@@ -5,10 +5,10 @@ trelloTextField.addEventListener("input", onChange)
 togglTextField.addEventListener("input", onChange)
 
 function onChange(e) {
-    trektorStorage.set({[e.target.name]: e.target.value});
+    trektor.storage.set({[e.target.name]: e.target.value});
 }
 
-trektorStorage.get(['trello', 'toggl']).then(result => {
+trektor.storage.get(['trello', 'toggl']).then(result => {
     trelloTextField.value = result.trello;
     togglTextField.value = result.toggl;
 })

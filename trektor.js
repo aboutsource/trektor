@@ -33,10 +33,22 @@ class ChromeRuntime {
   }
 }
 
+window.trektor = {
+  storage: null,
+  runtime: null,
+
+  fetchJSON(url, options = {}) {
+    return this.runtime.sendMessage({
+      action: 'fetchJSON',
+      args: [url, options],
+    });
+  },
+};
+
 if (window.chrome !== undefined) {
-  window.trektorStorage = new ChromeStorage();
-  window.trektorRuntime = new ChromeRuntime();
+  window.trektor.storage = new ChromeStorage();
+  window.trektor.runtime = new ChromeRuntime();
 } else {
-  window.trektorStorage = browser.storage.local;
-  window.trektorRuntime = browser.runtime;
+  window.trektor.storage = browser.storage.local;
+  window.trektor.runtime = browser.runtime;
 }

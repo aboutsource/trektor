@@ -13,14 +13,14 @@
         "*://trello.com/*"
       ],
       "js": [
-        "storage.js",
+        "trektor.js",
         "content_script.js"
       ]
     }
   ],
   "background": {
     "scripts": [
-      "storage.js",
+      "trektor.js",
       "background.js"
     ]
   },
