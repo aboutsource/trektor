@@ -24,7 +24,7 @@ const mappings = {
     "Audience Exporter": "ae",
     "Cta Calls": "xcta",
     "Camper": "camper",
-    "Praktikum": "pr"
+    "Praktikum #pr": "pr"
 };
 
 function onClick() {
