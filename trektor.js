@@ -1,16 +1,21 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-alert */
+/* eslint-disable max-classes-per-file */
 class ChromeStorage {
   constructor() {
-      this.storage = chrome.storage.local;
+    this.storage = chrome.storage.local;
   }
+
   get(keys) {
-      return new Promise((resolve) => {
-          this.storage.get(keys, resolve);
-      })
+    return new Promise((resolve) => {
+      this.storage.get(keys, resolve);
+    });
   }
+
   set(values) {
-      return new Promise((resolve) => {
-          this.storage.set(values, resolve);
-      })
+    return new Promise((resolve) => {
+      this.storage.set(values, resolve);
+    });
   }
 }
 
@@ -27,8 +32,9 @@ class ChromeRuntime {
 
   onMessage(callback) {
     this.runtime.onMessage.addListener((msg, sender, respond) => {
-      callback(msg).then((response) => { respond(response) });
-      return true;
+      callback(msg).then((response) => {
+        respond(response);
+      });
     });
   }
 }
@@ -37,10 +43,16 @@ window.trektor = {
   storage: null,
   runtime: null,
 
-  fetchJSON(url, options = {}) {
-    return this.runtime.sendMessage({
-      action: 'fetchJSON',
-      args: [url, options],
+  async fetchJSON(url, options = {}, errorMessage = 'auto') {
+    // console.log(`[Trektor]: fetching ${url}`);
+    return fetch(url.toString(), options).then((response) => {
+      if (!response.ok) {
+        const errorMsg = (errorMessage === 'auto') ? `Fehler ${response.status} beim Abrufen von ${url.host}: ${response.statusText}.\n\
+       Bitte stelle sicher, dass ein gültiger API-Token angegeben ist.` : errorMessage;
+        alert(errorMsg);
+        return false;
+      }
+      return response.json();
     });
   },
 };

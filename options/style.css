@@ -1,3 +1,12 @@
-h1 {
-  font-style: italic;
+input {
+  margin: 5px;
+}
+
+h2 {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+a {
+  margin-left: 2px;
 }
