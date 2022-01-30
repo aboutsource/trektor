@@ -59,11 +59,7 @@ async function onClick() {
   if (workspaces === false) {
     return false;
   }
-  const workspace = workspaces.filter((ws) => ws.name === 'aboutsource')[0];
-  if (workspace.id === undefined) {
-    alert('WorkspaceID undefined\nDies bedeutet, du hast entweder keinen Zugriff zum a:s toggl oder es ist kein API-Token angegeben.');
-    return false;
-  }
+  const workspace = workspaces[0];
 
   url = new URL(`https://api.track.toggl.com/api/v8/workspaces/${workspace.id}/projects`);
   const projects = await trektor.fetchJSON(url, {
