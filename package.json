@@ -1,0 +1,24 @@
+{
+  "name": "trektor",
+  "version": "1.0.0",
+  "description": "Browser-Extension zum automatischen Anlegen von Toggl tracking tasks",
+  "main": "trektor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aboutsource/trektor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aboutsource/trektor/issues"
+  },
+  "homepage": "https://github.com/aboutsource/trektor#readme",
+  "devDependencies": {
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4"
+  }
+}
