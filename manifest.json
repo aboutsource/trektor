@@ -6,7 +6,6 @@
   "icons": {
     "64": "icons/64.png"
   },
-
   "content_scripts": [
     {
       "matches": [

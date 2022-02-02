@@ -1,146 +1,55 @@
-function addButton() {
-    const sidebar = document.querySelector(".window-sidebar")
-    const button = document.createElement('span');
-    button.classList.add('button-link');
-    button.addEventListener('click', onClick);
-    sidebar.prepend(button);
+async function addButton() {
+  const sidebar = await awaitSelector(".window-sidebar", 10000);
+  sidebar.querySelector(".mod-no-top-margin")?.classList?.remove("mod-no-top-margin");
+  sidebar.querySelector(".js-sidebar-add-heading")?.classList?.remove("mod-no-top-margin");
 
-    const buttonIcon = document.createElement('span');
-    buttonIcon.classList.add('icon-sm', 'plugin-icon');
-    buttonIcon.innerText = '+';
-    button.append(buttonIcon);
+  const button = document.createElement("span");
+  button.classList.add("button-link");
+  sidebar.prepend(button);
 
-    const buttonText = document.createElement('span');
-    buttonText.innerText = 'Toggl Task';
-    button.append(buttonText);
+  const buttonIcon = document.createElement("span");
+  buttonIcon.classList.add("icon-sm", "plugin-icon");
+  buttonIcon.innerText = "+";
+  button.append(buttonIcon);
 
-    sidebar.querySelector(".mod-no-top-margin").classList.remove("mod-no-top-margin")
-    sidebar.querySelector(".js-sidebar-add-heading").classList.remove("mod-no-top-margin")
+  const buttonText = document.createElement("span");
+  buttonText.innerText = "Toggl Task";
+  button.append(buttonText);
+
+  button.addEventListener("click", async () => {
+    const response = await trektor.runtime.sendMessage({
+        action: 'addTask',
+        args: [window.location.pathname.split('/', 3)[2]],
+    });
+
+    if (response) window.alert(response);
+  });
 }
 
-const mappings = {
-    "GG": "gg",
-    "Audience Builder": "ab",
-    "Audience Exporter": "ae",
-    "Cta Calls": "xcta",
-    "Camper": "camper",
-    "Praktikum #pr": "pr"
-};
+function awaitSelector(selector, timeout) {
+  const element = document.querySelector(".window-sidebar");
+  if (element !== null) return Promise.resolve(element);
 
-function onClick() {
-    let trelloApiKey = "afadffe77f745496f80ebb4bf460c615"
-    trektor.storage.get(['trello', 'toggl']).then(result => {
-        const trelloToken = result.trello
-        const togglToken = result.toggl
+  return new Promise((resolve, reject) => {
+    const interval = window.setInterval(() => {
+      const element = document.querySelector(".window-sidebar");
 
-        const idLong = window.location.pathname.split("/")[2];
-        var url = new URL(`https://api.trello.com/1/cards/${idLong}`)
-        fetch(url.toString(), {
-            headers: {
-                'Authorization': `OAuth oauth_consumer_key="${trelloApiKey}", oauth_token="${trelloToken}"`,
-                'Content-Type': 'application/json'
-            },
-        }).then(response => response.json()).then(response => {
-            const idShort = response["idShort"]
-
-            var labelShort, labelLong = undefined
-            for (var i in response["labels"]) {
-                if (labelShort == undefined) {
-                    labelShort = mappings[response["labels"][i]["name"]]
-                    labelLong = (labelShort != undefined) ? response["labels"][i]["name"] : labelLong
-                } else if (mappings[response["labels"][i]["name"]] != undefined) {
-                    alert(`Diese Karte hat sowohl "${labelShort}" als auch "${mappings[response["labels"][i]["name"]]}".`)
-                }
-            }
-
-            if (labelShort == undefined) {
-                alert("Diese Karte besitzt kein unterstütztes Projekt Label.")
-                return false
-            }
-
-            if (!response["name"].endsWith(`#${labelShort}_${idShort}`)) {
-
-
-                url = new URL(`https://api.trello.com/1/cards/${idLong}`)
-
-                var data = {
-                    "name": `${response["name"]} #${labelShort}_${idShort}`
-                };
-                fetch(url.toString(), {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `OAuth oauth_consumer_key="${trelloApiKey}", oauth_token="${trelloToken}"`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                }).then(response => {
-                    if (!response.ok) {
-                        alert(`Error ${response.status}:\n${response.statusText}`)
-                        return false
-                    }
-
-                })
-
-
-            }
-
-            url = new URL("https://api.track.toggl.com/api/v8/workspaces")
-            const togglAuth = btoa(`${togglToken}:api_token`)
-            trektor.fetchJSON(url.toString(), {
-                headers: {
-                    'Authorization': `Basic ${togglAuth}`,
-                    'Content-Type': 'application/json'
-                }
-            }).then(response => {
-                for (var i in response) {
-                    if (response[i]["name"] == "aboutsource") {
-                        var wid = response[i]["id"]
-                    }
-                }
-                if (wid == undefined) {
-                    alert("WorkspaceID undefined\nDies bedeutet, du hast entweder keinen Zugriff zum a:s toggl oder es ist kein API-Token angegeben.")
-                    return false
-                }
-
-                url = new URL(`https://api.track.toggl.com/api/v8/workspaces/${wid}/projects`)
-                trektor.fetchJSON(url.toString(), {
-                    headers: {
-                        'Authorization': `Basic ${togglAuth}`,
-                        'Content-Type': 'application/json'
-                    }
-                }).then(response => {
-                    for (var i in response) {
-                        if (response[i]["name"].endsWith(`(${labelShort})`)) {
-                            var pid = response[i]["id"]
-
-                            url = new URL('https://api.track.toggl.com/api/v8/tasks')
-                            data = {
-                                "task": {
-                                    "name": `${labelShort}_${idShort}`,
-                                    "pid": pid
-                                }
-                            }
-                            trektor.fetchJSON(url.toString(), {
-                                method: 'POST',
-                                headers: {
-                                    'Authorization': `Basic ${togglAuth}`,
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(data)
-                            })
-                        }
-                    }
-                })
-            })
-
-        })
-    })
-
-
+      if (element !== null) {
+        resolve(element);
+        window.clearInterval(interval);
+      } else if (timeout < 0) {
+        reject(new Error('timeout'));
+        window.clearInterval(interval);
+      }
+      timeout -= 100;
+    }, 100);
+  });
 }
 
-window.addEventListener("pushstate", function () {
-    if (window.location.pathname.startsWith("/c/")) {
-        addButton()
-    }
-})
+window.addEventListener("pushstate", () => {
+  if (window.location.pathname.startsWith("/c/")) addButton();
+});
+
+window.addEventListener('load', () => {
+  if (window.location.pathname.startsWith("/c/")) addButton();
+});

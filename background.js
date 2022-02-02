@@ -1,12 +1,55 @@
-trektor.runtime.onMessage((msg) => {
+trektor.runtime.onMessage.addListener((msg) => {
   switch (msg.action) {
-    case 'fetchJSON':
-      return fetchJSON(...msg.args);
+    case 'addTask':
+      return addTask(...msg.args);
     default:
-      return Promise.reject('unknown action');
+      return Promise.reject(new Error('unknown action'));
   }
 });
 
-function fetchJSON(url, options = {}) {
-  return fetch(url, options).then((response) => response.json());
+async function addTask(cardId) {
+  const card = await trektor.trelloGateway.getCard(cardId);
+
+  const taskPrefixes = card.labels
+    .map((label) => label.name.match(/(?<=#)[a-z0-9]+$/)?.[0])
+    .filter((prefix) => prefix !== undefined);
+
+  if (taskPrefixes.length === 0) {
+    throw new Error('Card has no valid project labels.');
+  }
+  if (taskPrefixes.length > 1) {
+    throw new Error('Card has multiple project labels.');
+  }
+  const taskPrefix = taskPrefixes[0];
+  const taskName = `${taskPrefix}_${card.idShort}`;
+  const cardTaskName = card.name.match(/(?<=#)[a-z0-9]+_[0-9]+/)?.[0];
+
+  if (cardTaskName === undefined) {
+    await trektor.trelloGateway.updateCard(card.id, {
+      name: `${card.name} #${taskName}`,
+    });
+  } else if (cardTaskName !== taskName) {
+    throw new Error('Card name includes invalid tracking task.');
+  }
+  const workspaces = await trektor.togglGateway.getWorkspaces();
+
+  if (workspaces.length === 0) {
+    throw new Error('Could not find any toggl workspaces.');
+  }
+  if (workspaces.length > 1) {
+    throw new Error('Found multiple toggl workspaces. Not sure how to deal with that...');
+  }
+  const allProjects = await trektor.togglGateway.getProjects(workspaces[0].id);
+  const projects = allProjects.filter((project) => project.name.endsWith(`(${taskPrefix})`));
+
+  if (projects.length === 0) {
+    throw new Error('Could not find any matching toggl project.');
+  }
+  if (projects.length > 1) {
+    throw new Error('Found multiple matching toggl projects. Not sure how to deal with that...');
+  }
+  const tasks = await trektor.togglGateway.getTasks(projects[0].id);
+  if (tasks.some((task) => task.name === taskName)) return;
+
+  await trektor.togglGateway.createTask(projects[0].id, taskName);
 }
