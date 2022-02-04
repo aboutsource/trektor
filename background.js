@@ -1,11 +1,21 @@
-trektor.runtime.onMessage.addListener((msg) => {
+trektor.runtime.onMessage.addListener(async (msg) => {
   switch (msg.action) {
+    case 'track':
+      await track(...msg.args);
+      return;
     case 'addTask':
-      return addTask(...msg.args);
+      await addTask(...msg.args);
+      return;
     default:
-      return Promise.reject(new Error('unknown action'));
+      throw new Error(`unknown action: ${msg.action}`);
   }
 });
+
+async function track(cardId) {
+  const task = await addTask(cardId);
+  const response = await trektor.togglGateway.startTimeEntry(task.id);
+  return response.data;
+}
 
 async function addTask(cardId) {
   const card = await trektor.trelloGateway.getCard(cardId);
@@ -49,7 +59,9 @@ async function addTask(cardId) {
     throw new Error('Found multiple matching toggl projects. Not sure how to deal with that...');
   }
   const tasks = await trektor.togglGateway.getTasks(projects[0].id);
-  if (tasks.some((task) => task.name === taskName)) return;
+  const task = tasks.find((task) => task.name === taskName);
+  if (task !== undefined) return task;
 
-  await trektor.togglGateway.createTask(projects[0].id, taskName);
+  const response = await trektor.togglGateway.createTask(projects[0].id, taskName)
+  return response.data;
 }

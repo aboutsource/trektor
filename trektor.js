@@ -94,7 +94,15 @@ class TogglGateway {
   }
 
   createTask(projectId, name) {
-    return this.request("post", "/tasks", { task: { name, pid: projectId } });
+    return this.request("post", "/tasks", {
+      task: { name, pid: projectId },
+    });
+  }
+
+  startTimeEntry(taskId) {
+    return this.request("post", "/time_entries/start", {
+      time_entry: { tid: taskId, created_with: "trektor" },
+    });
   }
 
   async request(method, path, data = null) {

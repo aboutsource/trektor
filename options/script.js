@@ -1,14 +1,8 @@
-let trelloTextField = document.querySelector("input[name='trello']");
-let togglTextField = document.querySelector("input[name='toggl']");
+const fields = document.querySelectorAll("input").forEach(async (field) => {
+  field.addEventListener("input", (e) => {
+    trektor.storage.set({[e.target.name]: e.target.value});
+  });
 
-trelloTextField.addEventListener("input", onChange)
-togglTextField.addEventListener("input", onChange)
-
-function onChange(e) {
-  trektor.storage.set({[e.target.name]: e.target.value});
-}
-
-trektor.storage.get(['trello', 'toggl']).then(result => {
-  trelloTextField.value = result.trello;
-  togglTextField.value = result.toggl;
-})
+  const { [field.name] : value } = await trektor.storage.get(field.name);
+  field.value = (value === undefined) ? '' : value;
+});
