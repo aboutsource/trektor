@@ -1,6 +1,6 @@
 {
   "name": "trektor",
-  "version": "0.0.3",
+  "private": true,
   "repository": "git@github.com:aboutsource/trektor",
   "author": "info@aboutsource.net",
   "license": "MIT",
