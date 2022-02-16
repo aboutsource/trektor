@@ -1,0 +1,10 @@
+{
+  "name": "trektor",
+  "version": "0.0.3",
+  "repository": "git@github.com:aboutsource/trektor",
+  "author": "info@aboutsource.net",
+  "license": "MIT",
+  "dependencies": {
+    "webextension-polyfill": "^0.8.0"
+  }
+}

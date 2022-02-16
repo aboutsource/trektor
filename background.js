@@ -1,4 +1,4 @@
-trektor.runtime.onMessage.addListener(async (msg) => {
+browser.runtime.onMessage.addListener(async (msg) => {
   switch (msg.action) {
     case 'track':
       await track(...msg.args);

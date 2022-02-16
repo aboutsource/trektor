@@ -17,7 +17,7 @@
         "https://trello.com/*"
       ],
       "js": [
-        "trektor.js",
+        "node_modules/webextension-polyfill/dist/browser-polyfill.min.js",
         "content_script.js"
       ],
       "css": [
@@ -27,6 +27,7 @@
   ],
   "background": {
     "scripts": [
+      "node_modules/webextension-polyfill/dist/browser-polyfill.min.js",
       "trektor.js",
       "background.js"
     ]
