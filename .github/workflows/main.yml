@@ -18,6 +18,7 @@ jobs:
       - run: |
           export DISPLAY=:99
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
+          sleep 1
           echo -n "${CHROME_EXTENSION_KEY}" > trektor.pem
           chrome --pack-extension=trektor --pack-extension-key=trektor.pem
         env:
