@@ -1,5 +1,5 @@
 <gupdate xmlns="http://www.google.com/update2/response" protocol="2.0">
   <app appid="lffnocdloekhnmiadpgfgknfbhgnppgl">
-    <updatecheck codebase="https://aboutsource.github.io/trektor/trektor.crx" version="0.0.7"/>
+    <updatecheck codebase="https://aboutsource.github.io/trektor/trektor.crx" version="0.0.8"/>
   </app>
 </gupdate>
