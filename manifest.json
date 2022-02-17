@@ -3,7 +3,7 @@
   "name": "Trektor",
   "update_url": "https://aboutsource.github.io/trektor/update.xml",
   "description": "Browser-Extension zum automatischen Anlegen von Toggl tracking tasks",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "browser_specific_settings": {
     "gecko": {
       "id": "trektor@aboutsource.net"
