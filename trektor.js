@@ -1,6 +1,6 @@
 class TrelloGateway {
   static ENDPOINT = "https://api.trello.com/1";
-  static API_KEY = "afadffe77f745496f80ebb4bf460c615";
+  static API_KEY = "2379d540412e417f6f0696c1397f38a6";
 
   #storage;
 
