@@ -34,7 +34,7 @@ async function addButton() {
     trackButtonIcon.classList.add("trektor-state-loading");
 
     try {
-      const response = await browser.runtime.sendMessage({
+      await browser.runtime.sendMessage({
         action: "track",
         args: [window.location.pathname.split("/", 3)[2]],
       });
@@ -49,7 +49,7 @@ async function addButton() {
 
   addButton.addEventListener("click", async () => {
     try {
-      const response = await browser.runtime.sendMessage({
+      await browser.runtime.sendMessage({
         action: "addTask",
         args: [window.location.pathname.split("/", 3)[2]],
       });
