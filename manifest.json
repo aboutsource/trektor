@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Trektor",
   "description": "Browser-Extension zum automatischen Anlegen von Toggl tracking tasks",
-  "version": "0.0.3",
+  "version": "0.0.10",
   "browser_specific_settings": {
     "gecko": {
       "id": "trektor@aboutsource.net"
@@ -17,7 +17,7 @@
         "https://trello.com/*"
       ],
       "js": [
-        "trektor.js",
+        "vendor/browser-polyfill.js",
         "content_script.js"
       ],
       "css": [
@@ -27,6 +27,7 @@
   ],
   "background": {
     "scripts": [
+      "vendor/browser-polyfill.js",
       "trektor.js",
       "background.js"
     ]

@@ -1,0 +1,13 @@
+{
+  "name": "trektor",
+  "private": true,
+  "repository": "git@github.com:aboutsource/trektor",
+  "author": "info@aboutsource.net",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "cp node_modules/webextension-polyfill/dist/browser-polyfill.js vendor/browser-polyfill.js"
+  },
+  "dependencies": {
+    "webextension-polyfill": "^0.8.0"
+  }
+}

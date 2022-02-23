@@ -33,27 +33,29 @@ async function addButton() {
   trackButton.addEventListener("click", async () => {
     trackButtonIcon.classList.add("trektor-state-loading");
 
-    const response = await trektor.runtime.sendMessage({
+    try {
+      const response = await browser.runtime.sendMessage({
         action: "track",
         args: [window.location.pathname.split("/", 3)[2]],
-    });
-    trackButtonIcon.classList.remove("trektor-state-loading");
-
-    if (response) {
-      window.alert(response);
-    } else {
+      });
       trackButtonIcon.classList.replace("icon-clock", "icon-check-circle");
       window.setTimeout(() => trackButtonIcon.classList.replace("icon-check-circle", "icon-clock"), 2000);
+    } catch (err) {
+      window.alert(err);
+    } finally {
+      trackButtonIcon.classList.remove("trektor-state-loading");
     }
   });
 
   addButton.addEventListener("click", async () => {
-    const response = await trektor.runtime.sendMessage({
-      action: "addTask",
-      args: [window.location.pathname.split("/", 3)[2]],
-    });
-
-    if (response) window.alert(response);
+    try {
+      const response = await browser.runtime.sendMessage({
+        action: "addTask",
+        args: [window.location.pathname.split("/", 3)[2]],
+      });
+    } catch (err) {
+      window.alert(err);
+    }
   });
 }
 
