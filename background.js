@@ -13,7 +13,8 @@ browser.runtime.onMessage.addListener(async (msg) => {
 
 async function track(cardId) {
   const task = await addTask(cardId);
-  const response = await trektor.togglGateway.startTimeEntry(task.id);
+  const card = await trektor.trelloGateway.getCard(cardId);
+  const response = await trektor.togglGateway.startTimeEntry(task.id, card.name);
   return response.data;
 }
 

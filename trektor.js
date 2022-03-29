@@ -68,9 +68,9 @@ class TogglGateway {
     return this.#request("get", "/time_entries/current");
   }
 
-  startTimeEntry(taskId) {
+  startTimeEntry(taskId, description) {
     return this.#request("post", "/time_entries/start", {
-      time_entry: { tid: taskId, created_with: "trektor" },
+      time_entry: { description, tid: taskId, created_with: "trektor" },
     });
   }
 
