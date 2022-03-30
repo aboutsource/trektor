@@ -14,7 +14,8 @@ browser.runtime.onMessage.addListener(async (msg) => {
 async function track(cardId) {
   const task = await addTask(cardId);
   const card = await trektor.trelloGateway.getCard(cardId);
-  const response = await trektor.togglGateway.startTimeEntry(task.id, card.name);
+  const cardName = stripStoryPointsAndTaskToken(card.name);
+  const response = await trektor.togglGateway.startTimeEntry(task.id, cardName);
   return response.data;
 }
 
@@ -65,4 +66,10 @@ async function addTask(cardId) {
 
   const response = await trektor.togglGateway.createTask(projects[0].id, taskName)
   return response.data;
+}
+
+function stripStoryPointsAndTaskToken(cardName) {
+  return cardName
+    .replace(/^(\s*\(\d+\))?\s*/, '') // story points, e.g. (3)
+    .replace(/\s*#[a-z0-9_]+\s*$/, ''); // task token, e.g. #orga_5417
 }
