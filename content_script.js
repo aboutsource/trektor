@@ -27,7 +27,7 @@ async function addButton() {
 
   const addButton = document.createElement("span");
   addButton.classList.add("button-link", "add-button-link");
-  addButton.innerText = "Toggl Task hinzufügen";
+  addButton.innerText = "Toggl-Task hinzufügen";
   buttonList.append(addButton);
 
   trackButton.addEventListener("click", async () => {
