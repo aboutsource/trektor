@@ -33,16 +33,17 @@ async function addTask(cardId) {
     throw new Error('Card has multiple project labels.');
   }
   const taskPrefix = taskPrefixes[0];
-  const taskName = `${taskPrefix}_${card.idShort}`;
-  const cardTaskName = card.name.match(/(?<=#)[a-z0-9]+_[0-9]+/)?.[0];
+  
+  let taskName = card.name.match(/(?<=#)[a-z0-9_-]+/)?.[0];
 
-  if (cardTaskName === undefined) {
+  if (taskName === undefined) {
+    taskName = `${taskPrefix}_${card.idShort}`;
+
     await trektor.trelloGateway.updateCard(card.id, {
       name: `${card.name} #${taskName}`,
     });
-  } else if (cardTaskName !== taskName) {
-    throw new Error('Card name includes invalid tracking task.');
   }
+
   const workspaces = await trektor.togglGateway.getWorkspaces();
 
   if (workspaces.length === 0) {
