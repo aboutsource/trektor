@@ -34,7 +34,7 @@ async function addTask(cardId) {
   }
   const taskPrefix = taskPrefixes[0];
   
-  let taskName = card.name.match(/(?<=#)[a-z0-9_-]+/)?.[0];
+  let taskName = card.name.match(/(?<=#)[A-Za-z0-9_-]+/)?.[0];
 
   if (taskName === undefined) {
     taskName = `${taskPrefix}_${card.idShort}`;
