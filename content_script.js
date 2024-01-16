@@ -35,7 +35,7 @@ async function addButton() {
 
     try {
       await browser.runtime.sendMessage({
-        action: "track",
+        action: 'track',
         args: [window.location.pathname.split("/", 3)[2]],
       });
       trackButtonIcon.classList.replace("icon-clock", "icon-check-circle");
@@ -50,7 +50,7 @@ async function addButton() {
   addButton.addEventListener("click", async () => {
     try {
       await browser.runtime.sendMessage({
-        action: "addTask",
+        action: 'addTask',
         args: [window.location.pathname.split("/", 3)[2]],
       });
     } catch (err) {
@@ -80,9 +80,5 @@ function awaitSelector(selector, timeout) {
 }
 
 window.addEventListener("pushstate", () => {
-  if (window.location.pathname.startsWith("/c/")) addButton();
-});
-
-window.addEventListener('load', () => {
   if (window.location.pathname.startsWith("/c/")) addButton();
 });
