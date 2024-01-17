@@ -34,6 +34,7 @@ async function addButton() {
     trackButtonIcon.classList.add("trektor-state-loading");
 
     try {
+      console.log("start tracking card")
       await browser.runtime.sendMessage({
         action: 'track',
         args: [window.location.pathname.split("/", 3)[2]],
@@ -42,6 +43,7 @@ async function addButton() {
       window.setTimeout(() => trackButtonIcon.classList.replace("icon-check-circle", "icon-clock"), 2000);
     } catch (err) {
       window.alert(err);
+      throw err;
     } finally {
       trackButtonIcon.classList.remove("trektor-state-loading");
     }
@@ -49,12 +51,14 @@ async function addButton() {
 
   addButton.addEventListener("click", async () => {
     try {
+      console.log("adding task")
       await browser.runtime.sendMessage({
         action: 'addTask',
         args: [window.location.pathname.split("/", 3)[2]],
       });
     } catch (err) {
       window.alert(err);
+      throw err;
     }
   });
 }

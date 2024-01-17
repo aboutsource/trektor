@@ -1,0 +1,1 @@
+BackgroundScript.init(getTrektor())

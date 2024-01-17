@@ -13,7 +13,7 @@
       ],
       "js": [
         "vendor/browser-polyfill.js",
-        "content_script.js"
+        "scripts/content_script.js"
       ],
       "css": [
         "content_style.css"
@@ -21,9 +21,11 @@
     }
   ],
   "background": {
-    "service_worker": "trektor.js",
+    "service_worker": "scripts/chromium.js",
     "scripts": [
-        "trektor.js"
+        "scripts/trektor.js",
+        "scripts/background.js",
+        "scripts/firefox.js"
     ]
   },
   "permissions": [
