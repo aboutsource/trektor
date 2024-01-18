@@ -49,7 +49,7 @@ class BackgroundScript {
     let taskName = card.name.match(/(?<=#)[A-Za-z0-9_-]+/)?.[0];
 
     if (taskName === undefined) {
-      taskName = `${taskPrefix}_${card.idShort}`;
+      taskName = `${taskPrefix}_${card.shortLink}`;
 
       await BackgroundScript.trektor.trelloGateway.updateCard(card.id, {
         name: `${card.name} #${taskName}`,
