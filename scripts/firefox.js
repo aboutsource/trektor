@@ -1,1 +1,1 @@
-BackgroundScript.init(getTrektor())
+new BackgroundWorker(getTrektor()).run()

@@ -103,5 +103,6 @@ function getTrektor() {
   return {
     trelloGateway: new TrelloGateway(browser.storage.local),
     togglGateway: new TogglGateway(browser.storage.local),
+    browser: browser,
   }
 }

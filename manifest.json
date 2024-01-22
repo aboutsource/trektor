@@ -12,7 +12,6 @@
         "https://trello.com/*"
       ],
       "js": [
-        "vendor/browser-polyfill.js",
         "scripts/content_script.js"
       ],
       "css": [
