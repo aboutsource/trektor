@@ -1,11 +1,10 @@
 class BackgroundWorker {
 
-  constructor(trektor) {
-    this.trektor = trektor;
+  constructor() {
   }
 
   run() {
-    this.trektor.browser.runtime.onMessage.addListener(async (msg) => {
+    trektor.browser.runtime.onMessage.addListener(async (msg) => {
       switch (msg.action) {
         case "track":
           await this.track(...msg.args);
@@ -21,14 +20,14 @@ class BackgroundWorker {
 
   async track(cardId) {
     const task = await this.addTask(cardId);
-    const card = await this.trektor.trelloGateway.getCard(cardId);
+    const card = await trektor.trelloGateway.getCard(cardId);
     const cardName = this.stripStoryPointsAndTaskToken(card.name);
-    const response = await this.trektor.togglGateway.startTimeEntry(task.id, cardName);
+    const response = await trektor.togglGateway.startTimeEntry(task.id, cardName);
     return response.data;
   }
 
   async addTask(cardId) {
-    const card = await this.trektor.trelloGateway.getCard(cardId);
+    const card = await trektor.trelloGateway.getCard(cardId);
 
     const taskPrefixes = card.labels
       .map((label) => label.name.match(/(?<=#)[a-z0-9]+$/)?.[0])
@@ -47,12 +46,12 @@ class BackgroundWorker {
     if (taskName === undefined) {
       taskName = `${taskPrefix}_${card.idShort}`;
 
-      await this.trektor.trelloGateway.updateCard(card.id, {
+      await trektor.trelloGateway.updateCard(card.id, {
         name: `${card.name} #${taskName}`,
       });
     }
 
-    const workspaces = await this.trektor.togglGateway.getWorkspaces();
+    const workspaces = await trektor.togglGateway.getWorkspaces();
 
     if (workspaces.length === 0) {
       throw new Error("Could not find any toggl workspaces.");
@@ -60,7 +59,7 @@ class BackgroundWorker {
     if (workspaces.length > 1) {
       throw new Error("Found multiple toggl workspaces. Not sure how to deal with that...");
     }
-    const allProjects = await this.trektor.togglGateway.getProjects(workspaces[0].id);
+    const allProjects = await trektor.togglGateway.getProjects(workspaces[0].id);
     const projects = allProjects.filter((project) => project.name.endsWith(`(${taskPrefix})`));
 
     if (projects.length === 0) {
@@ -69,11 +68,11 @@ class BackgroundWorker {
     if (projects.length > 1) {
       throw new Error("Found multiple matching toggl projects. Not sure how to deal with that...");
     }
-    const tasks = await this.trektor.togglGateway.getTasks(projects[0].id);
+    const tasks = await trektor.togglGateway.getTasks(projects[0].id);
     const task = tasks.find((task) => task.name === taskName);
     if (task !== undefined) return task;
 
-    const response = await this.trektor.togglGateway.createTask(projects[0].id, taskName)
+    const response = await trektor.togglGateway.createTask(projects[0].id, taskName)
     return response.data;
   }
 

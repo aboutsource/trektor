@@ -1,1 +1,1 @@
-new BackgroundWorker(getTrektor()).run()
+new BackgroundWorker().run()

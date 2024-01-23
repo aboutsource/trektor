@@ -12,7 +12,8 @@
         "https://trello.com/*"
       ],
       "js": [
-        "scripts/content_script.js"
+        "scripts/content_script.js",
+        "scripts/trektor.js"
       ],
       "css": [
         "content_style.css"

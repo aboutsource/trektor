@@ -99,10 +99,9 @@ class TogglGateway {
   }
 }
 
-function getTrektor() {
-  return {
-    trelloGateway: new TrelloGateway(browser.storage.local),
-    togglGateway: new TogglGateway(browser.storage.local),
-    browser: browser,
-  }
+
+const trektor = {
+  trelloGateway: new TrelloGateway(browser.storage.local),
+  togglGateway: new TogglGateway(browser.storage.local),
+  browser: browser,
 }

@@ -1,7 +1,3 @@
-if (typeof browser == "undefined") {
-  globalThis.browser = chrome
-}
-
 async function addButton() {
   const sidebar = await awaitSelector(".window-sidebar", 10000);
 
@@ -38,7 +34,7 @@ async function addButton() {
     trackButtonIcon.classList.add("trektor-state-loading");
 
     try {
-      await browser.runtime.sendMessage({
+      await trektor.browser.runtime.sendMessage({
         action: "track",
         args: [window.location.pathname.split("/", 3)[2]],
       });
@@ -53,7 +49,7 @@ async function addButton() {
 
   addButton.addEventListener("click", async () => {
     try {
-      await browser.runtime.sendMessage({
+      await trektor.browser.runtime.sendMessage({
         action: "addTask",
         args: [window.location.pathname.split("/", 3)[2]],
       });
