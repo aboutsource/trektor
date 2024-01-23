@@ -1,3 +1,3 @@
-importScripts('background.js', 'trektor.js');
+importScripts('trektor.js', 'background.js');
 
 new BackgroundWorker().run()
