@@ -2,34 +2,25 @@
 <html lang="en">
   <head>
     <link rel="icon" href="icons/64.png">
+    <link rel="stylesheet" href="style.css">
     <title>Trektor settings</title>
     <meta charset="UTF-8">
-    <style>
-      a {
-        display: block;
-        margin-bottom: 10px;
-      }
-      input {
-        width: 100%;
-        box-sizing: border-box;
-        margin-bottom: 10px;
-      }
-    </style>
   </head>
   <body>
+    <h2>Willkommen bei Trektor!</h2>
+    <div class="notification" id="permissions-granted">✔ Alle Berechtigungen vorhanden</div>
+    <div class="notification" id="permissions-not-granted">✘ Berechtigung fehlt! <button id="request">Anfordern</button></div>
+
     <a href="https://trello.com/1/authorize?expiration=30days&scope=read,write&response_type=token&name=Trektor&key=2379d540412e417f6f0696c1397f38a6" target="_blank">
       Trello Token
     </a>
-
     <input type="text" name="trello" />
 
     <a href="https://track.toggl.com/profile" target="_blank">
       Toggl Token
     </a>
-
     <input type="text" name="toggl" />
 
-    <script src="../vendor/browser-polyfill.js"></script>
     <script src="./script.js"></script>
   </body>
 </html>
