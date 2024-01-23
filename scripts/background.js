@@ -16,6 +16,10 @@ class BackgroundWorker {
           throw new Error(`unknown action: ${msg.action}`);
       }
     });
+
+    trektor.browser.runtime.onInstalled.addListener((details) => {
+      if (details.reason == "install") trektor.browser.runtime.openOptionsPage()
+    })
   }
 
   async track(cardId) {

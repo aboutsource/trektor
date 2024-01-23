@@ -34,7 +34,7 @@ class TrelloGateway {
     });
 
     if (response.status === 401) {
-      throw new Error('Invalid or expired trello token.');
+      throw new Error('Invalid or expired trello token. \n Open Trektor settings to get a new one.');
     } else {
       return response.json();
     }
@@ -92,7 +92,7 @@ class TogglGateway {
     });
 
     if (response.status === 403) {
-      throw new Error('Invalid toggl token.');
+      throw new Error('Invalid toggl token. \n Open Trektor settings page to get a valid one.');
     } else {
       return response.json();
     }
