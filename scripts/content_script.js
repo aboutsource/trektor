@@ -41,7 +41,7 @@ async function addButton() {
       trackButtonIcon.classList.replace("icon-clock", "icon-check-circle");
       window.setTimeout(() => trackButtonIcon.classList.replace("icon-check-circle", "icon-clock"), 2000);
     } catch (err) {
-      window.alert(err);
+      if (window.confirm(err + "\n\n Open Trektor options page now?")) trektor.browser.runtime.sendMessage({ action: "options" });
     } finally {
       trackButtonIcon.classList.remove("trektor-state-loading");
     }
@@ -54,7 +54,7 @@ async function addButton() {
         args: [window.location.pathname.split("/", 3)[2]],
       });
     } catch (err) {
-      window.alert(err);
+      if (window.confirm(err + "\n\n Open Trektor options page now?")) trektor.browser.runtime.sendMessage({ action: "options" });
     }
   });
 }

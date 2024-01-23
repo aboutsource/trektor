@@ -1,0 +1,30 @@
+a {
+  display: block;
+  color: blue;
+  margin: 10px;
+}
+input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+body {
+  font-family: sans-serif;
+  width: 90%;
+  max-width: 500px;
+  margin: 1.5rem auto;
+}
+
+#permissions-granted {
+  background-color: rgba(0, 255, 0, 0.5);
+  border: 2px green solid;
+}
+#permissions-not-granted {
+  background-color: rgba(255, 20, 0, 0.5);
+  border: 2px red solid;
+}
+.notification {
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+}
