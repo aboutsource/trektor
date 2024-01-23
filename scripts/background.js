@@ -12,13 +12,15 @@ class BackgroundWorker {
         case "addTask":
           await this.addTask(...msg.args);
           return;
+        case "options":
+          trektor.browser.runtime.openOptionsPage();
         default:
           throw new Error(`unknown action: ${msg.action}`);
       }
     });
 
     trektor.browser.runtime.onInstalled.addListener((details) => {
-      if (details.reason == "install") trektor.browser.runtime.openOptionsPage()
+      if (details.reason == "install") trektor.browser.runtime.openOptionsPage();
     })
   }
 
