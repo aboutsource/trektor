@@ -20,16 +20,16 @@ document.querySelectorAll("input").forEach((field) => {
   });
 });
 
-check_permissions()
+checkPermissions()
 
 document.getElementById("request").addEventListener("click", () => { requestPermissions() })
 
 function requestPermissions() {
   console.log("hallo")
-  browser.permissions.request(permissions, () => { check_permissions() })
+  browser.permissions.request(permissions, () => { checkPermissions() })
 }
 
-function check_permissions() {
+function checkPermissions() {
   browser.permissions.contains(permissions, (contains) => {
     if (contains) {
       document.getElementById("permissions-granted").style.display = "block";
