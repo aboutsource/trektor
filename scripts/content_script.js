@@ -34,7 +34,7 @@ async function addButton() {
     trackButtonIcon.classList.add("trektor-state-loading");
 
     try {
-      await browser.runtime.sendMessage({
+      await trektor.browser.runtime.sendMessage({
         action: "track",
         args: [window.location.pathname.split("/", 3)[2]],
       });
@@ -49,7 +49,7 @@ async function addButton() {
 
   addButton.addEventListener("click", async () => {
     try {
-      await browser.runtime.sendMessage({
+      await trektor.browser.runtime.sendMessage({
         action: "addTask",
         args: [window.location.pathname.split("/", 3)[2]],
       });
@@ -71,7 +71,7 @@ function awaitSelector(selector, timeout) {
         resolve(element);
         window.clearInterval(interval);
       } else if (timeout < 0) {
-        reject(new Error('timeout'));
+        reject(new Error("timeout"));
         window.clearInterval(interval);
       }
       timeout -= 100;
@@ -80,9 +80,5 @@ function awaitSelector(selector, timeout) {
 }
 
 window.addEventListener("pushstate", () => {
-  if (window.location.pathname.startsWith("/c/")) addButton();
-});
-
-window.addEventListener('load', () => {
   if (window.location.pathname.startsWith("/c/")) addButton();
 });

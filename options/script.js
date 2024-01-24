@@ -4,6 +4,6 @@ document.querySelectorAll("input").forEach((field) => {
   });
 
   browser.storage.local.get(field.name).then(({ [field.name]: value }) => {
-    field.value = (value === undefined) ? '' : value;
+    field.value = (value === undefined) ? "" : value;
   });
 });

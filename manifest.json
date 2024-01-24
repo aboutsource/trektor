@@ -1,13 +1,8 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Trektor",
   "description": "Browser-Extension zum automatischen Anlegen von Toggl tracking tasks",
   "version": "0.0.11",
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "trektor@aboutsource.net"
-    }
-  },
   "icons": {
     "64": "icons/64.png"
   },
@@ -17,8 +12,8 @@
         "https://trello.com/*"
       ],
       "js": [
-        "vendor/browser-polyfill.js",
-        "content_script.js"
+        "scripts/trektor.js",
+        "scripts/content_script.js"
       ],
       "css": [
         "content_style.css"
@@ -26,16 +21,19 @@
     }
   ],
   "background": {
+    "service_worker": "scripts/chromium.js",
     "scripts": [
-      "vendor/browser-polyfill.js",
-      "trektor.js",
-      "background.js"
+        "scripts/trektor.js",
+        "scripts/background.js",
+        "scripts/firefox.js"
     ]
   },
   "permissions": [
-    "https://api.trello.com/*",
-    "https://api.track.toggl.com/*",
     "storage"
+  ],
+  "host_permissions": [
+    "https://api.trello.com/*",
+    "https://api.track.toggl.com/*"
   ],
   "options_ui": {
     "page": "options/index.html"
