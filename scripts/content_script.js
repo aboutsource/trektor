@@ -39,7 +39,7 @@ async function addButton() {
     });
     trackButtonIcon.classList.replace("icon-clock", "icon-check-circle");
     window.setTimeout(() => trackButtonIcon.classList.replace("icon-check-circle", "icon-clock"), 2000);
-    if (response !== true) window.alert(response);
+    if (response !== null) window.alert(response);
     trackButtonIcon.classList.remove("trektor-state-loading");
   });
 
@@ -48,7 +48,7 @@ async function addButton() {
       action: "addTask",
       args: [window.location.pathname.split("/", 3)[2]],
     });
-    if (response !== true) window.alert(response);
+    if (response !== null) window.alert(response);
   });
 }
 

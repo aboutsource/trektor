@@ -4,12 +4,12 @@ class BackgroundWorker {
       switch (msg.action) {
         case "track":
           this.track(...msg.args)
-            .then(() => sendResponse(true))
+            .then(() => sendResponse())
             .catch((e) => sendResponse(e.message));
           break;
         case "addTask":
           this.addTask(...msg.args)
-            .then(() => sendResponse(true))
+            .then(() => sendResponse())
             .catch((e) => sendResponse(e.message));
           break;
         default:
