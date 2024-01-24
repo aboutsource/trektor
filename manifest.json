@@ -12,7 +12,7 @@
         "https://trello.com/*"
       ],
       "js": [
-        "vendor/browser-polyfill.js",
+        "scripts/trektor.js",
         "scripts/content_script.js"
       ],
       "css": [
