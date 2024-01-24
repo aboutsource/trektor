@@ -13,7 +13,7 @@ class BackgroundWorker {
             .catch((e) => sendResponse(e.message));
           break;
         default:
-          new Error(`unknown action: ${msg.action}`);
+          throw new Error(`unknown action: ${msg.action}`);
       }
       return true;
     });
