@@ -99,7 +99,6 @@ class TogglGateway {
   }
 }
 
-
 const trektor = {
   trelloGateway: new TrelloGateway(browser.storage.local),
   togglGateway: new TogglGateway(browser.storage.local),
