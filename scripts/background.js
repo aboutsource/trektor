@@ -1,20 +1,21 @@
 class BackgroundWorker {
-
-  constructor() {
-  }
-
   run() {
-    trektor.browser.runtime.onMessage.addListener(async (msg) => {
+    trektor.browser.runtime.onMessage.addListener((msg, _, sendResponse) => {
       switch (msg.action) {
         case "track":
-          await this.track(...msg.args);
-          return;
+          this.track(...msg.args)
+            .then(() => sendResponse())
+            .catch((e) => sendResponse(e.message));
+          break;
         case "addTask":
-          await this.addTask(...msg.args);
-          return;
+          this.addTask(...msg.args)
+            .then(() => sendResponse())
+            .catch((e) => sendResponse(e.message));
+          break;
         default:
-          throw new Error(`unknown action: ${msg.action}`);
+          new Error(`unknown action: ${msg.action}`);
       }
+      return true;
     });
   }
 

@@ -33,29 +33,22 @@ async function addButton() {
   trackButton.addEventListener("click", async () => {
     trackButtonIcon.classList.add("trektor-state-loading");
 
-    try {
-      await trektor.browser.runtime.sendMessage({
-        action: "track",
-        args: [window.location.pathname.split("/", 3)[2]],
-      });
-      trackButtonIcon.classList.replace("icon-clock", "icon-check-circle");
-      window.setTimeout(() => trackButtonIcon.classList.replace("icon-check-circle", "icon-clock"), 2000);
-    } catch (err) {
-      window.alert(err);
-    } finally {
-      trackButtonIcon.classList.remove("trektor-state-loading");
-    }
+    const response = await trektor.browser.runtime.sendMessage({
+      action: "track",
+      args: [window.location.pathname.split("/", 3)[2]],
+    });
+    trackButtonIcon.classList.replace("icon-clock", "icon-check-circle");
+    window.setTimeout(() => trackButtonIcon.classList.replace("icon-check-circle", "icon-clock"), 2000);
+    if (response !== null) window.alert(response);
+    trackButtonIcon.classList.remove("trektor-state-loading");
   });
 
   addButton.addEventListener("click", async () => {
-    try {
-      await trektor.browser.runtime.sendMessage({
-        action: "addTask",
-        args: [window.location.pathname.split("/", 3)[2]],
-      });
-    } catch (err) {
-      window.alert(err);
-    }
+    const response = await trektor.browser.runtime.sendMessage({
+      action: "addTask",
+      args: [window.location.pathname.split("/", 3)[2]],
+    });
+    if (response !== null) window.alert(response);
   });
 }
 
