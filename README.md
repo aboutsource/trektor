@@ -6,6 +6,10 @@ Trektor ist nicht auf den öffentlichen Plattformen von Mozilla und Google Chrom
 
 # Installation
 
+```
+npm install
+```
+
 ## Firefox
 
 Firefox akzeptiert nur signierte Add-ons, daher signieren wir jede neue Version, bei diesem Vorgang wird Trektor in einem gepackten Format abgespeichert, einer .xpi-Datei. Du kannst sie von deinen freundlichen Kollegen bekommen (und vielleicht wird sie in Zukunft auch hier auf Github automatisch zum Download angeboten). Um Trektor in Firefox zu verwenden, musst du das Add-on aus dieser Datei installieren, statt wie bei anderen Add-ons üblich aus der Mozilla-Plattform. Gib dazu in das Adressfeld deines Firefox about:addons und ENTER ein, klick danach auf das Zahnrad rechts oben und wähl schließlich von dem Menü »Add-on aus Datei installieren«. Nun musst du nur noch die .xpi-Datei auswählen – fertig installiert.
