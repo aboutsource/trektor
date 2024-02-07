@@ -38,7 +38,7 @@ class TrelloGateway {
 }
 
 class TogglGateway {
-  static ENDPOINT = "https://api.track.toggl.com/api/v8";
+  static ENDPOINT = "https://api.track.toggl.com/api/v9";
 
   #storage;
 
@@ -54,23 +54,23 @@ class TogglGateway {
     return this.#request("get", `/workspaces/${workspaceId}/projects`);
   }
 
-  getTasks(projectId) {
-    return this.#request("get", `/projects/${projectId}/tasks`);
+  getTasks(workspaceId, projectId) {
+    return this.#request("get", `/workspaces/${workspaceId}/projects/${projectId}/tasks`);
   }
 
-  createTask(projectId, name) {
-    return this.#request("post", "/tasks", {
-      task: { name, pid: projectId },
-    });
+  createTask(workspaceId, projectId, name) {
+    return this.#request("post", `/workspaces/${workspaceId}/projects/${projectId}/tasks`, { name });
   }
 
-  getCurrentTimeEntry() {
-    return this.#request("get", "/time_entries/current");
-  }
-
-  startTimeEntry(taskId, description) {
-    return this.#request("post", "/time_entries/start", {
-      time_entry: { description, tid: taskId, created_with: "trektor" },
+  startTimeEntry(workspaceId, projectId, taskId, description) {
+    return this.#request("post", `/workspaces/${workspaceId}/time_entries`, {
+      description,
+      start: (new Date()).toISOString(),
+      duration: -1,
+      workspace_id: workspaceId,
+      project_id: projectId,
+      task_id: taskId,
+      created_with: "trektor",
     });
   }
 

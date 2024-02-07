@@ -75,3 +75,7 @@ function awaitSelector(selector, timeout) {
 window.addEventListener("pushstate", () => {
   if (window.location.pathname.startsWith("/c/")) addButton();
 });
+
+window.addEventListener('load', () => {
+  if (window.location.pathname.startsWith("/c/")) addButton();
+});

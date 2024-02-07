@@ -23,7 +23,7 @@ class BackgroundWorker {
     const task = await this.addTask(cardId);
     const card = await trektor.trelloGateway.getCard(cardId);
     const cardName = this.stripStoryPointsAndTaskToken(card.name);
-    const response = await trektor.togglGateway.startTimeEntry(task.id, cardName);
+    const response = await trektor.togglGateway.startTimeEntry(task.workspace_id, task.project_id, task.id, cardName);
     return response.data;
   }
 
@@ -68,12 +68,11 @@ class BackgroundWorker {
     if (projects.length > 1) {
       throw new Error("Found multiple matching toggl projects. Not sure how to deal with that...");
     }
-    const tasks = await trektor.togglGateway.getTasks(projects[0].id);
+    const tasks = await trektor.togglGateway.getTasks(workspaces[0].id, projects[0].id);
     const task = tasks.find((task) => task.name === taskName);
     if (task !== undefined) return task;
 
-    const response = await trektor.togglGateway.createTask(projects[0].id, taskName)
-    return response.data;
+    return trektor.togglGateway.createTask(workspaces[0].id, projects[0].id, taskName);
   }
 
   stripStoryPointsAndTaskToken(cardName) {
