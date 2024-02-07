@@ -1,7 +1,3 @@
-if (typeof browser == "undefined") {
-  globalThis.browser = chrome
-}
-
 class TrelloGateway {
   static ENDPOINT = "https://api.trello.com/1";
   static API_KEY = "2379d540412e417f6f0696c1397f38a6";
@@ -99,8 +95,10 @@ class TogglGateway {
   }
 }
 
+const trektorBrowser = (typeof browser == "undefined") ? chrome : browser;
+
 const trektor = {
-  trelloGateway: new TrelloGateway(browser.storage.local),
-  togglGateway: new TogglGateway(browser.storage.local),
-  browser: browser,
+  trelloGateway: new TrelloGateway(trektorBrowser.storage.local),
+  togglGateway: new TogglGateway(trektorBrowser.storage.local),
+  browser: trektorBrowser,
 }
