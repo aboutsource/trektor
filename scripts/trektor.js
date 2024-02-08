@@ -51,7 +51,9 @@ class TogglGateway {
   }
 
   getProjects(workspaceId) {
-    return this.#request("get", `/workspaces/${workspaceId}/projects`);
+    return this.#request("get", `/workspaces/${workspaceId}/projects`, {
+      params: { active: true, per_page: 200 },
+    });
   }
 
   getTasks(workspaceId, projectId) {
@@ -59,23 +61,31 @@ class TogglGateway {
   }
 
   createTask(workspaceId, projectId, name) {
-    return this.#request("post", `/workspaces/${workspaceId}/projects/${projectId}/tasks`, { name });
+    return this.#request("post", `/workspaces/${workspaceId}/projects/${projectId}/tasks`, {
+      data: { name },
+    });
   }
 
   startTimeEntry(workspaceId, projectId, taskId, description) {
     return this.#request("post", `/workspaces/${workspaceId}/time_entries`, {
-      description,
-      start: (new Date()).toISOString(),
-      duration: -1,
-      workspace_id: workspaceId,
-      project_id: projectId,
-      task_id: taskId,
-      created_with: "trektor",
+      data: {
+        description,
+        start: (new Date()).toISOString(),
+        duration: -1,
+        workspace_id: workspaceId,
+        project_id: projectId,
+        task_id: taskId,
+        created_with: "trektor",
+      },
     });
   }
 
-  async #request(method, path, data = null) {
-    const url = this.constructor.ENDPOINT + path;
+  async #request(method, path, conf = {}) {
+    let url = this.constructor.ENDPOINT + path;
+
+    if (conf.params) {
+      url += `?${(new URLSearchParams(conf.params)).toString()}`;
+    }
     const { toggl: token } = await this.#storage.get("toggl");
 
     const response = await fetch(url, {
@@ -84,7 +94,7 @@ class TogglGateway {
         "Authorization": `Basic ${btoa(`${token}:api_token`)}`,
         "Content-Type": "application/json; charset=utf-8",
       },
-      body: (data === null) ? null : JSON.stringify(data),
+      body: (conf.data) ? JSON.stringify(conf.data) : null,
     });
 
     if (response.status === 403) {
