@@ -1,7 +1,3 @@
-if (typeof browser == "undefined") {
-  globalThis.browser = chrome
-}
-
 class TrelloGateway {
   static ENDPOINT = "https://api.trello.com/1";
   static API_KEY = "2379d540412e417f6f0696c1397f38a6";
@@ -42,7 +38,7 @@ class TrelloGateway {
 }
 
 class TogglGateway {
-  static ENDPOINT = "https://api.track.toggl.com/api/v8";
+  static ENDPOINT = "https://api.track.toggl.com/api/v9";
 
   #storage;
 
@@ -58,23 +54,23 @@ class TogglGateway {
     return this.#request("get", `/workspaces/${workspaceId}/projects`);
   }
 
-  getTasks(projectId) {
-    return this.#request("get", `/projects/${projectId}/tasks`);
+  getTasks(workspaceId, projectId) {
+    return this.#request("get", `/workspaces/${workspaceId}/projects/${projectId}/tasks`);
   }
 
-  createTask(projectId, name) {
-    return this.#request("post", "/tasks", {
-      task: { name, pid: projectId },
-    });
+  createTask(workspaceId, projectId, name) {
+    return this.#request("post", `/workspaces/${workspaceId}/projects/${projectId}/tasks`, { name });
   }
 
-  getCurrentTimeEntry() {
-    return this.#request("get", "/time_entries/current");
-  }
-
-  startTimeEntry(taskId, description) {
-    return this.#request("post", "/time_entries/start", {
-      time_entry: { description, tid: taskId, created_with: "trektor" },
+  startTimeEntry(workspaceId, projectId, taskId, description) {
+    return this.#request("post", `/workspaces/${workspaceId}/time_entries`, {
+      description,
+      start: (new Date()).toISOString(),
+      duration: -1,
+      workspace_id: workspaceId,
+      project_id: projectId,
+      task_id: taskId,
+      created_with: "trektor",
     });
   }
 
@@ -99,8 +95,10 @@ class TogglGateway {
   }
 }
 
+const trektorBrowser = (typeof browser == "undefined") ? chrome : browser;
+
 const trektor = {
-  trelloGateway: new TrelloGateway(browser.storage.local),
-  togglGateway: new TogglGateway(browser.storage.local),
-  browser: browser,
+  trelloGateway: new TrelloGateway(trektorBrowser.storage.local),
+  togglGateway: new TogglGateway(trektorBrowser.storage.local),
+  browser: trektorBrowser,
 }
