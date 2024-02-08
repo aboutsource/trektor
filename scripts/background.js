@@ -78,6 +78,6 @@ class BackgroundWorker {
   stripStoryPointsAndTaskToken(cardName) {
     return cardName
       .replace(/^(\s*\(\d+\))?\s*/, "") // story points, e.g. (3)
-      .replace(/\s*#[a-z0-9_]+\s*$/, ""); // task token, e.g. #orga_5417
+      .replace(/\s*#\w+\s*$/, ""); // task token, e.g. #orga_5417
   }
 }
