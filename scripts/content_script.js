@@ -1,12 +1,12 @@
 async function addButton() {
-  const sidebar = await awaitSelector(".window-sidebar", 10000);
+  const sidebar = await findSidebar(10000);
 
-  const module = document.createElement("div");
+  const module = document.createElement("section");
   module.classList.add("window-module", "u-clearfix");
   sidebar.prepend(module);
 
-  const moduleHeading = document.createElement('h3');
-  moduleHeading.innerText = 'Trektor';
+  const moduleHeading = document.createElement("h4");
+  moduleHeading.innerText = "Trektor";
   module.append(moduleHeading);
 
   const buttonList = document.createElement("div");
@@ -38,7 +38,11 @@ async function addButton() {
       args: [window.location.pathname.split("/", 3)[2]],
     });
     trackButtonIcon.classList.replace("icon-clock", "icon-check-circle");
-    window.setTimeout(() => trackButtonIcon.classList.replace("icon-check-circle", "icon-clock"), 2000);
+    window.setTimeout(
+      () =>
+        trackButtonIcon.classList.replace("icon-check-circle", "icon-clock"),
+      2000
+    );
     if (response !== null) window.alert(response);
     trackButtonIcon.classList.remove("trektor-state-loading");
   });
@@ -52,13 +56,13 @@ async function addButton() {
   });
 }
 
-function awaitSelector(selector, timeout) {
-  const element = document.querySelector(".window-sidebar");
+function findSidebar(timeout) {
+  const element = queryXPath("//h4[text()='Power-Ups']/ancestor::div");
   if (element !== null) return Promise.resolve(element);
 
   return new Promise((resolve, reject) => {
     const interval = window.setInterval(() => {
-      const element = document.querySelector(".window-sidebar");
+      const element = queryXPath("//h4[text()='Power-Ups']/ancestor::div");
 
       if (element !== null) {
         resolve(element);
@@ -72,10 +76,16 @@ function awaitSelector(selector, timeout) {
   });
 }
 
+function queryXPath(xpath) {
+  return document
+    .evaluate(xpath, document, null, XPathResult.ANY_TYPE, null)
+    .iterateNext();
+}
+
 window.addEventListener("pushstate", () => {
   if (window.location.pathname.startsWith("/c/")) addButton();
 });
 
-window.addEventListener('load', () => {
+window.addEventListener("load", () => {
   if (window.location.pathname.startsWith("/c/")) addButton();
 });
